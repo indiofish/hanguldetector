@@ -21,6 +21,10 @@ aps,
 \patchcmd{\ttlh@hang}{\parindent\z@}{\parindent\z@\leavevmode}{}{}
 \patchcmd{\ttlh@hang}{\noindent}{}{}{}
 \makeatother
+\titleformat{\section}
+  {\normalfont\fontsize{12}{15}\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}
+  {\normalfont\fontsize{11}{13}\bfseries}{\thesubsection}{1em}{}
 
 \lstset{frame=tb,
 aboveskip=3mm,
@@ -32,24 +36,23 @@ tabsize=2
 \renewcommand\thesection{\arabic{section}}
 \renewcommand\thesubsection{\thesection.\arabic{subsection}}
 \begin{document}
-\titlespacing*{\subsection}{0pt}{1.1\baselineskip}{\baselineskip}
+\titlespacing*{\subsection}{0pt}{\baselineskip}{\baselineskip}
 
 \title{RECOGNIZATION AND RECOMMENDATION OF HANGUL FONTS USING COMPUTER VISION BASED
 TECHNIQUES}% Force line breaks with \\
 
-\author{CHUNG SEIJUN ???????? OUM ?????? KIM  2015-12377 CHOO 2014-18868   }
+\author{CHUNG SEIJUN 2018-23341 OUM TAEHWOI 2012-11114 KIM HYEONSEO  2015-12377
+CHOO WONHO 2014-18868}
 \affiliation{%
- Computer Vision 2019-1\\Department of Computer Science\\Seoul National University
+ Computer Vision 2019-1\\Department of Computer Science\\ Seoul National University
 }%
 \date{April 26,2019}
 
 \begin{abstract}
-  Fonts are a set of pre-designed ... I don't know what should go in to an
-  abstract. PLEASE FILL ME IN
 \begin{description}
 \item[Objective]
 This project recognizes different Hangul fonts based on Computer Vision
-    Techniques and provide akin fonts that avoids legal issues.
+    Techniques and recommend akin fonts.
 \end{description}
 \end{abstract}
 
@@ -59,31 +62,27 @@ This project recognizes different Hangul fonts based on Computer Vision
 
 \section{\label{sec:level1}INTRODUCTION}
 From the monospaced fonts on a VT100 terminal to the
-Seoul fonts by the Seoul city government, the range of available fonts to users have expanded, due to the rise of tools for font creation.
+Seoul fonts by Seoul city, the range of available fonts to users have expanded, due to the rise of tools for font creation.
 
 Fonts are predefined collections of letters, varying in design and size.
 Different fonts are utilized based on the purpose of the user, as an
 intermediary of the user's purposes and emotions.
-
-However, as more and more fonts are being introduced to the market, the quest
-for the appropriate font is either an evergoing battle with vast images,
-or an effortless defeat, known as the default font. Even when one has a
-desired font with its image in hand, the search is analogous to finding a needle in the
-haystack. Also, finding the appropriate font is not just a matter of choice, as it can spur legal
-disputes as well.\cite{lawsuit}
-
-As of now, there is no way to search the desired font from an input of image one has found in books,
-magazines, or from a street sign;
+As more fonts are introduced to the market, the quest
+for the appropriate font has become an evergoing battle with vast images.
+Also, finding the appropriate font is not just a matter of choice, as it can spur legal disputes as well.\cite{lawsuit}
 
 Compared to Hangul fonts, English fonts consist of 26 upper and 26 lower case
 letters, a total of 52 characters. The limited number of characters, and their
 simple form makes English font recognition not as challenging and previous
-researches have prodcued high recognition rate(add reference?),
+researches have prodcued high recognition rates.
 
-However, the Hangul font consists of 2,350(KS X 1001) or 11,172(KPS 9566)
+However, Hangul fonts consist of 2,350(KS X 1001) or 11,172(KPS 9566)
 characters, each composed of onset, nucelus, and codas. Due to this complicated
 format, research on font recogntion of Hangul characters is not active, compared to other Latin alphabets.
 In this project, we will use KS X 1001 character set.
+
+The object of this paper is to address these issues, identifying Hangul
+characters from images to recognize their font and recommend similar fonts.
 
 
 \section{\label{sec:level1}PAPER SURVEY}
@@ -117,10 +116,6 @@ in detecting characters or fonts.
 Mass of Hangul character fonts recogntion with CNN, Hidden Markov Model with
 reference to paper\cite{tensmeyer} or other materials.
 
-\subsection{\label{sec:level3} Estimating Surface Normal Vector of Hangul
-Fonts (Optional)}
-??
-
 \pagebreak
 \section{\label{sec:level3} ALGORITHM}
 
@@ -132,11 +127,10 @@ for each c in characters:
 		compare(c, font[idx])
 	select most similar font
 select font with most concensus
-		
-		
-	
 \end{lstlisting}
-
+The algorithm above briefly explains how font recognition is done. First, extract
+characters from an image. Compare the characters with their equivalents in the
+reference font sets, and select the best match.
 
 \section{\label{sec:level2}EXPECTED RESULTS}
 We aim for the following goals:
@@ -144,7 +138,6 @@ We aim for the following goals:
   \item Extract distinct features of Korean characters based on Computer Vision
     Techniques
   \item Recognize/Recommend the provided font
-
 \end{enumerate}
 
 \section{\label{sec:level2}DATASET}
@@ -177,5 +170,3 @@ https://dockets.justia.com/docket/new-york/nyedce/1:2009cv04286/296847
 
 \flushend
 \end{document}
-%
-% ****** End of file apssamp.tex ******
