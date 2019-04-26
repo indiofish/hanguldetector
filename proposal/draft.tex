@@ -37,7 +37,7 @@ tabsize=2
 \title{RECOGNIZATION AND RECOMMENDATION OF HANGUL FONTS USING COMPUTER VISION BASED
 TECHNIQUES}% Force line breaks with \\
 
-\author{CHUNG SEIJUN ???????? OUM ?????? KIM  ??????? CHOO ??????   }
+\author{CHUNG SEIJUN ???????? OUM ?????? KIM  ??????? CHOO 2014-18868   }
 \affiliation{%
  Computer Vision 2019-1\\Department of Computer Science\\Seoul National University
 }%
@@ -83,6 +83,7 @@ researches have prodcued high recognition rate(add reference?),
 However, the Hangul font consists of 2,350(KS X 1001) or 11,172(KPS 9566)
 characters, each composed of onset, nucelus, and codas. Due to this complicated
 format, research on font recogntion of Hangul characters is not active, compared to other Latin alphabets.
+In this project, we will use KS X 1001 character set.
 
 
 \section{\label{sec:level1}PAPER SURVEY}
@@ -100,28 +101,40 @@ This paper\cite{chen} addresses the large-scale visual font recognition (VFR)
 problem, which aims at automatic identification of the typeface.
 
 \section{\label{sec:level2}KEY FEATURES}
-\subsection{\label{sec:level3} Hangul componenet decomposition}
-Cosidering its outline and location, decompose a Hangul glyph into its onset,
-necleus and coda, using stastistical-structural information.
+\subsection{\label{sec:level3} Separating Hangul character from image}
+We cannot expect input as an image of a single character.
+Input image may include many characters, so we should separate it
+character by character using xx technique.
 
 \subsection{\label{sec:level3} Feature Detection}
 A Study on Typology for Hangul Fonts Identification and Classification in
 terms of character's typeface, character size and character slope and etc.
 based on Computer Vision Techniques.
 
-\subsection{\label{sec:level3} Machine Learning}
-Mass of Hangul character fonts recogntion with CNN< Hideen Markov Model with
+\subsection{\label{sec:level3} Machine Learning(Optional)}
+Rather than conservative computer theories, we can use machine learning techiniques
+in detecting characters or fonts.
+Mass of Hangul character fonts recogntion with CNN, Hidden Markov Model with
 reference to paper\cite{tensmeyer} or other materials.
 
 \subsection{\label{sec:level3} Estimating Surface Normal Vector of Hangul
 Fonts (Optional)}
+??
 
 \pagebreak
 \section{\label{sec:level3} ALGORITHM}
 
 \begin{lstlisting}
-detect_letters("input.img")
-print("Hello, World!")
+separate characters from input image
+for each c in characters:
+	find idx such that c == ref_font[idx]
+	for each font in fonts:
+		compare(c, font[idx])
+	select most similar font
+select font with most concensus
+		
+		
+	
 \end{lstlisting}
 
 
@@ -130,15 +143,19 @@ We aim for the following goals:
 \begin{enumerate}[topsep=0pt, itemsep=-1ex, partopsep=1ex, parsep=1ex]
   \item Extract distinct features of Korean characters based on Computer Vision
     Techniques
-  \item Recognize the provided font
-  \item Recommend most similar fonts
+  \item Recognize/Recommend the provided font
+
 \end{enumerate}
 
 \section{\label{sec:level2}DATASET}
-The experimental data set used in this paper is
-\textbf{\textit{PHD08}}\cite{ham}, a large-sacle Korean character
-database. \textbf{\textit{PHD08}} has 2,187 samples for each of 2,350 Korean letters, consisting
-of a total 5,139,450 samples.
+Since there's not enough data set existing, we will make new dataset.
+We will download .ttf font files offered by Naver Corp.
+Using the downloaded font files, we will generate 64 * 64 image file for 2,350 Korean letters.
+Therefore, there will be 2,350 * (\# of distinct fonts) image files of size 64 * 64.
+%The experimental data set used in this paper is
+%\textbf{\textit{PHD08}}\cite{ham}, a large-sacle Korean character
+%database. \textbf{\textit{PHD08}} has 2,187 samples for each of 2,350 Korean letters, consisting
+%of a total 5,139,450 samples.
 
 \begin{thebibliography}{1}
 \bibitem{lawsuit} The Font Bureau, Inc. v. NBC Universal, Inc. et al\\
