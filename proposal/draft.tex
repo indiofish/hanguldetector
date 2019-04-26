@@ -1,0 +1,164 @@
+\documentclass[%
+ reprint,
+%showpacs,preprintnumbers,
+nofootinbib,
+nobibnotes,
+%bibnotes,
+amsmath,amssymb,
+aps,
+]{revtex4-1}
+\usepackage{graphicx}% Include figure files
+\usepackage{dcolumn}% Align table columns on decimal point
+\usepackage{bm}% bold math
+\usepackage{enumitem}
+\usepackage{listings}
+\usepackage{titlesec}
+\usepackage{etoolbox}
+\usepackage{flushend}
+\usepackage{balance}
+
+\makeatletter
+\patchcmd{\ttlh@hang}{\parindent\z@}{\parindent\z@\leavevmode}{}{}
+\patchcmd{\ttlh@hang}{\noindent}{}{}{}
+\makeatother
+
+\lstset{frame=tb,
+aboveskip=3mm,
+belowskip=3mm,
+tabsize=2
+}
+
+\def\bibsection{\section*{\refname}}
+\renewcommand\thesection{\arabic{section}}
+\renewcommand\thesubsection{\thesection.\arabic{subsection}}
+\begin{document}
+\titlespacing*{\subsection}{0pt}{1.1\baselineskip}{\baselineskip}
+
+\title{RECOGNIZATION AND RECOMMENDATION OF HANGUL FONTS USING COMPUTER VISION BASED
+TECHNIQUES}% Force line breaks with \\
+
+\author{CHUNG SEIJUN ???????? OUM ?????? KIM  ??????? CHOO ??????   }
+\affiliation{%
+ Computer Vision 2019-1\\Department of Computer Science\\Seoul National University
+}%
+\date{April 26,2019}
+
+\begin{abstract}
+  Fonts are a set of pre-designed ... I don't know what should go in to an
+  abstract. PLEASE FILL ME IN
+\begin{description}
+\item[Objective]
+This project recognizes different Hangul fonts based on Computer Vision
+    Techniques and provide akin fonts that avoids legal issues.
+\end{description}
+\end{abstract}
+
+\maketitle
+
+%\tableofcontents
+
+\section{\label{sec:level1}INTRODUCTION}
+From the monospaced fonts on a VT100 terminal to the
+Seoul fonts by the Seoul city government, the range of available fonts to users have expanded, due to the rise of tools for font creation.
+
+Fonts are predefined collections of letters, varying in design and size.
+Different fonts are utilized based on the purpose of the user, as an
+intermediary of the user's purposes and emotions.
+
+However, as more and more fonts are being introduced to the market, the quest
+for the appropriate font is either an evergoing battle with vast images,
+or an effortless defeat, known as the default font. Even when one has a
+desired font with its image in hand, the search is analogous to finding a needle in the
+haystack. Also, finding the appropriate font is not just a matter of choice, as it can spur legal
+disputes as well.\cite{lawsuit}
+
+As of now, there is no way to search the desired font from an input of image one has found in books,
+magazines, or from a street sign;
+
+Compared to Hangul fonts, English fonts consist of 26 upper and 26 lower case
+letters, a total of 52 characters. The limited number of characters, and their
+simple form makes English font recognition not as challenging and previous
+researches have prodcued high recognition rate(add reference?),
+
+However, the Hangul font consists of 2,350(KS X 1001) or 11,172(KPS 9566)
+characters, each composed of onset, nucelus, and codas. Due to this complicated
+format, research on font recogntion of Hangul characters is not active, compared to other Latin alphabets.
+
+
+\section{\label{sec:level1}PAPER SURVEY}
+
+\subsection{\label{sec:level2}Classical Computer Vision}
+We shall utilize many techniques learned from our class and materials.
+
+\subsection{\label{sec:level2}Optical Font Recognition Using Typographical
+Featurs}
+This paper\cite{zramdini} aims to identify typeface, weight, slope and the size of
+text from an image block without any knowledge of the content of the text.
+
+\subsection{\label{sec:level2}Large-Scale Visual Font Recognition}
+This paper\cite{chen} addresses the large-scale visual font recognition (VFR)
+problem, which aims at automatic identification of the typeface.
+
+\section{\label{sec:level2}KEY FEATURES}
+\subsection{\label{sec:level3} Hangul componenet decomposition}
+Cosidering its outline and location, decompose a Hangul glyph into its onset,
+necleus and coda, using stastistical-structural information.
+
+\subsection{\label{sec:level3} Feature Detection}
+A Study on Typology for Hangul Fonts Identification and Classification in
+terms of character's typeface, character size and character slope and etc.
+based on Computer Vision Techniques.
+
+\subsection{\label{sec:level3} Machine Learning}
+Mass of Hangul character fonts recogntion with CNN< Hideen Markov Model with
+reference to paper\cite{tensmeyer} or other materials.
+
+\subsection{\label{sec:level3} Estimating Surface Normal Vector of Hangul
+Fonts (Optional)}
+
+\pagebreak
+\section{\label{sec:level3} ALGORITHM}
+
+\begin{lstlisting}
+detect_letters("input.img")
+print("Hello, World!")
+\end{lstlisting}
+
+
+\section{\label{sec:level2}EXPECTED RESULTS}
+We aim for the following goals:
+\begin{enumerate}[topsep=0pt, itemsep=-1ex, partopsep=1ex, parsep=1ex]
+  \item Extract distinct features of Korean characters based on Computer Vision
+    Techniques
+  \item Recognize the provided font
+  \item Recommend most similar fonts
+\end{enumerate}
+
+\section{\label{sec:level2}DATASET}
+The experimental data set used in this paper is
+\textbf{\textit{PHD08}}\cite{ham}, a large-sacle Korean character
+database. \textbf{\textit{PHD08}} has 2,187 samples for each of 2,350 Korean letters, consisting
+of a total 5,139,450 samples.
+
+\begin{thebibliography}{1}
+\bibitem{lawsuit} The Font Bureau, Inc. v. NBC Universal, Inc. et al\\
+https://dockets.justia.com/docket/new-york/nyedce/1:2009cv04286/296847
+\bibitem{zramdini} Abdelwahab Zramdini, et al. {\em Optical Font Recognition
+  Using Typographical Features}.\/ IEEE TRANSACTIONS ON PATTERN ANALYSIS AND
+    MACHINE INTELLIGENCE, 1988.
+\bibitem{chen} Guang Chen, et al. {\em Large-Scale Visual Font Recognition}.
+\/ CVPR, 2014.
+\bibitem{tensmeyer} Chris Tensmeyer, et al. {\em Convolution Neural Networks
+  for Font Classification}. CVPR, 2017.
+\bibitem{ham} D. Ham, D.Lee, I.Jung and I. Oh. {\em Construction of Printd
+  Hangul Character Database PHD08} Journal of the Korea Contents Association,
+    vol.8, no.11, pp. 33-40, Nov. 2008.
+\end{thebibliography}
+
+
+
+
+\flushend
+\end{document}
+%
+% ****** End of file apssamp.tex ******
