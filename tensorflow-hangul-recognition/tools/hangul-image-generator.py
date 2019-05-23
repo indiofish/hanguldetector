@@ -16,7 +16,7 @@ SCRIPT_PATH = os.path.dirname(os.path.abspath(__file__))
 
 # Default data paths.
 DEFAULT_LABEL_FILE = os.path.join(SCRIPT_PATH,
-                                  '../labels/2350-common-hangul.txt')
+                                  '../labels/256-common-hangul.txt')
 DEFAULT_FONTS_DIR = os.path.join(SCRIPT_PATH, '../fonts')
 DEFAULT_OUTPUT_DIR = os.path.join(SCRIPT_PATH, '../image-data')
 
@@ -61,7 +61,9 @@ def generate_hangul_images(label_file, fonts_dir, output_dir):
         for font in fonts:
             total_count += 1
             image = Image.new('L', (IMAGE_WIDTH, IMAGE_HEIGHT), color=255)
+            font_print = font.split('/')[-1].split('.')[0]
             font = ImageFont.truetype(font, 48)
+            #print(character)
             drawing = ImageDraw.Draw(image)
             w, h = drawing.textsize(character, font=font)
             drawing.text(
@@ -70,7 +72,7 @@ def generate_hangul_images(label_file, fonts_dir, output_dir):
                 fill=(0),
                 font=font
             )
-            file_string = 'hangul_{}.jpeg'.format(total_count)
+            file_string = 'hangul_{}_{}_{}.jpeg'.format(total_count, font_print,character)
             file_path = os.path.join(image_dir, file_string)
             image.save(file_path, 'JPEG')
             labels_csv.write(u'{},{}\n'.format(file_path, character))
