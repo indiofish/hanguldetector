@@ -29,11 +29,11 @@ def get_feature(img):
         # cv2.destroyAllWindows()
 
 
-        for chunk in split(range(y, y+h), SPLIT_SIZE):
+        for chunk in split(range(y, y+h-1), SPLIT_SIZE):
             tmp = 0
             for i in chunk:
                 cnt = 0
-                for j in range(x, x + w):
+                for j in range(x, x + w-1):
                     if thresh[i][j] == 0:
                         cnt += 1
                     else:
@@ -42,11 +42,11 @@ def get_feature(img):
 
             features.append(tmp/h)
 
-        for chunk in split(range(y, y+h), SPLIT_SIZE):
+        for chunk in split(range(y, y+h-1), SPLIT_SIZE):
             tmp = 0
             for i in chunk:
                 cnt = 0
-                for j in range(x+w, x-1, -1):
+                for j in range(x+w-1, x, -1):
                     if thresh[i][j] == 0:
                         cnt += 1
                     else:
@@ -55,11 +55,11 @@ def get_feature(img):
 
             features.append(tmp/h)
 
-        for chunk in split(range(x, x+w), SPLIT_SIZE):
+        for chunk in split(range(x, x+w-1), SPLIT_SIZE):
             tmp = 0
             for j in chunk:
                 cnt = 0
-                for i in range(y, y + h):
+                for i in range(y, y + h-1):
                     if thresh[i][j] == 0:
                         cnt += 1
                     else:
@@ -72,7 +72,7 @@ def get_feature(img):
             tmp = 0
             for j in chunk:
                 cnt = 0
-                for i in range(y+h, y, -1):
+                for i in range(y+h-1, y, -1):
                     if thresh[i][j] == 0:
                         cnt += 1
                     else:
@@ -90,7 +90,7 @@ for (img, name) in images:
     ft = get_feature(img)
     fts.append((ft, name))
 
-testimg = "./testset/mwo.png"
+testimg = "./testset/smallma.png"
 test = cv2.imread(testimg)
 testft = get_feature(test)
 
@@ -98,11 +98,12 @@ min_d = 999999999
 m = ''
 for (ft, name) in fts:
     if len(ft) < len(testft):
+        # penalize those with different # of boxes?
         ft = np.pad(ft, (0, len(testft)-len(ft)), 'constant',
-                constant_values=1)
+                constant_values=3)
     elif len(ft) > len(testft):
         testft = np.pad(testft, (0, len(ft)-len(testft)), 'constant',
-                constant_values=1)
+                constant_values=3)
 
     dist = np.linalg.norm(ft - testft)
     if dist < min_d:
