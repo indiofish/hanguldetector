@@ -2,6 +2,11 @@ import cv2
 import glob
 import numpy as np
 
+SPLIT_SIZE = 4
+def split(a, n):
+    k, m = divmod(len(a), n)
+    return (a[i*k + min(i,m):(i+1) * k+min(i+1, m)] for i in range(n))
+
 def get_feature(img):
     imgray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
@@ -13,68 +18,69 @@ def get_feature(img):
     contours, hierarchy = cv2.findContours(thresh, cv2.RETR_EXTERNAL,
                                            cv2.CHAIN_APPROX_SIMPLE)
     
-    features = np.array([])
+    features = []
 
     for c in contours:
         # M = cv2.moments(c)
         x,y,w,h = cv2.boundingRect(c)
-        img = cv2.rectangle(img, (x,y), (x+w,y+h), (0,255,0), 1)
-
+        # img = cv2.rectangle(img, (x,y), (x+w,y+h), (0,255,0), 1)
         # cv2.imshow("image", img)
         # cv2.waitKey(0)
         # cv2.destroyAllWindows()
 
 
-        left, right, top, bottom = 0, 0, 0, 0
-        for i in range(y, y+h):
-            # left edge
-            # in the direction of right
-            # count consecutive black pixels until the edge
-            cnt = 0
-            for j in range(x, x+w):
-                if thresh[i][j] == 0:
-                    cnt += 1
-                else:
-                    break
-            left += cnt
-        # normalize(?)
-        left /= h
+        for chunk in split(range(y, y+h), SPLIT_SIZE):
+            tmp = 0
+            for i in chunk:
+                cnt = 0
+                for j in range(x, x + w):
+                    if thresh[i][j] == 0:
+                        cnt += 1
+                    else:
+                        break
+                tmp += cnt
 
-        for i in range(y, y+h):
-            # right edge
-            cnt = 0
-            for j in range(x+w, x-1,-1):
-                if thresh[i][j] == 0:
-                    cnt += 1
-                else:
-                    break
-            right += cnt
-        right /= h
+            features.append(tmp/h)
 
-        for j in range(x, x+w):
-            cnt = 0
-            for i in range(y, y+h):
-                if thresh[i][j] == 0:
-                    cnt += 1
-                else:
-                    break
-            # print(cnt)
-            top += cnt
-        top /= w
+        for chunk in split(range(y, y+h), SPLIT_SIZE):
+            tmp = 0
+            for i in chunk:
+                cnt = 0
+                for j in range(x+w, x-1, -1):
+                    if thresh[i][j] == 0:
+                        cnt += 1
+                    else:
+                        break
+                tmp += cnt
 
-        for j in range(x, x+w-1):
-            cnt = 0
-            for i in range(y+h-1, y, -1):
-                if thresh[i][j] == 0:
-                    cnt += 1
-                else:
-                    break
-            bottom += cnt
-        bottom /= h
+            features.append(tmp/h)
 
-        features = np.append(features, np.array([left, top, right, bottom]))
+        for chunk in split(range(x, x+w), SPLIT_SIZE):
+            tmp = 0
+            for j in chunk:
+                cnt = 0
+                for i in range(y, y + h):
+                    if thresh[i][j] == 0:
+                        cnt += 1
+                    else:
+                        break
+                tmp += cnt
 
-    return features
+            features.append(tmp/w)
+
+        for chunk in split(range(x, x+w), SPLIT_SIZE):
+            tmp = 0
+            for j in chunk:
+                cnt = 0
+                for i in range(y+h, y, -1):
+                    if thresh[i][j] == 0:
+                        cnt += 1
+                    else:
+                        break
+                tmp += cnt
+            features.append(tmp/w)
+
+    return np.array(features)
 
 images = [(cv2.imread(im), im) for im in glob.glob("./data/*.png")]
 # img = cv2.imread("./data/ga.png")
@@ -84,19 +90,19 @@ for (img, name) in images:
     ft = get_feature(img)
     fts.append((ft, name))
 
-testimg = "./testset/at.png"
+testimg = "./testset/mwo.png"
 test = cv2.imread(testimg)
 testft = get_feature(test)
 
 min_d = 999999999
-m = 'hi'
+m = ''
 for (ft, name) in fts:
     if len(ft) < len(testft):
         ft = np.pad(ft, (0, len(testft)-len(ft)), 'constant',
-                constant_values=(0,))
+                constant_values=1)
     elif len(ft) > len(testft):
         testft = np.pad(testft, (0, len(ft)-len(testft)), 'constant',
-                constant_values=(0,))
+                constant_values=1)
 
     dist = np.linalg.norm(ft - testft)
     if dist < min_d:
