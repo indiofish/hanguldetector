@@ -20,3 +20,7 @@ normalizing strategy, that gives more than 4 numbers.
 * features.py: extract features from hangeul character images
 * generate\_date.py: generate dataset.npy from a selection of fonts
 * score.py: calculate scores for each feature
+
+#TODO
+get a better normalization technique for font profiles, that increases
+accuracy.
