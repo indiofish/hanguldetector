@@ -20,9 +20,12 @@ def get_profile(img):
     
     features = []
 
-    for c in contours:
+    rects = [cv2.boundingRect(c) for c in contours]
+    rects = sorted(rects, key=lambda x: x[0]+x[1])
+
+    for rect in rects:
         # M = cv2.moments(c)
-        x,y,w,h = cv2.boundingRect(c)
+        x,y,w,h = rect
         # img = cv2.rectangle(img, (x,y), (x+w,y+h), (0,255,0), 1)
         # cv2.imshow("image", img)
         # cv2.waitKey(0)
@@ -37,9 +40,10 @@ def get_profile(img):
                         cnt += 1
                     else:
                         break
+
                 tmp += cnt
 
-            features.append(tmp/h)
+            features.append(tmp/w)
 
         for chunk in split(range(y, y+h-1), SPLIT_SIZE):
             tmp = 0
@@ -52,7 +56,7 @@ def get_profile(img):
                         break
                 tmp += cnt
 
-            features.append(tmp/h)
+            features.append(tmp/w)
 
         for chunk in split(range(x, x+w-1), SPLIT_SIZE):
             tmp = 0
@@ -65,7 +69,7 @@ def get_profile(img):
                         break
                 tmp += cnt
 
-            features.append(tmp/w)
+            features.append(tmp/h)
 
         for chunk in split(range(x, x+w-1), SPLIT_SIZE):
             tmp = 0
@@ -77,6 +81,6 @@ def get_profile(img):
                     else:
                         break
                 tmp += cnt
-            features.append(tmp/w)
+            features.append(tmp/h)
 
     return np.array(features)
