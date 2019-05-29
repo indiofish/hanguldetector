@@ -2,7 +2,7 @@ import cv2
 import glob
 import numpy as np
 
-SPLIT_SIZE = 4
+SPLIT_SIZE = 3
 def split(a, n):
     k, m = divmod(len(a), n)
     return (a[i*k + min(i,m):(i+1) * k+min(i+1, m)] for i in range(n))
@@ -33,7 +33,7 @@ def get_profile(img):
             tmp = 0
             for i in chunk:
                 cnt = 0
-                for j in range(x, x + w-1):
+                for j in range(x, x+w-1):
                     if thresh[i][j] == 0:
                         cnt += 1
                     else:
@@ -59,7 +59,7 @@ def get_profile(img):
             tmp = 0
             for j in chunk:
                 cnt = 0
-                for i in range(y, y + h-1):
+                for i in range(y, y+h-1):
                     if thresh[i][j] == 0:
                         cnt += 1
                     else:
@@ -68,7 +68,7 @@ def get_profile(img):
 
             features.append(tmp/w)
 
-        for chunk in split(range(x, x+w), SPLIT_SIZE):
+        for chunk in split(range(x, x+w-1), SPLIT_SIZE):
             tmp = 0
             for j in chunk:
                 cnt = 0
