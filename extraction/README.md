@@ -13,3 +13,10 @@ character, and this is not enough to distinguish characters.
 
 One other solution would be to use the outermost border, but use a different
 normalizing strategy, that gives more than 4 numbers.
+
+# file description
+
+* main.py: execution code
+* features.py: extract features from hangeul character images
+* generate\_date.py: generate dataset.npy from a selection of fonts
+* score.py: calculate scores for each feature
