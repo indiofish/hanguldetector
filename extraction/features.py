@@ -2,7 +2,7 @@ import cv2
 import glob
 import numpy as np
 
-SPLIT_SIZE = 3
+SPLIT_SIZE = 4
 def split(a, n):
     k, m = divmod(len(a), n)
     return (a[i*k + min(i,m):(i+1) * k+min(i+1, m)] for i in range(n))
@@ -27,7 +27,6 @@ def get_profile(img):
         # cv2.imshow("image", img)
         # cv2.waitKey(0)
         # cv2.destroyAllWindows()
-
 
         for chunk in split(range(y, y+h-1), SPLIT_SIZE):
             tmp = 0
