@@ -4,11 +4,11 @@ import cv2
 import glob
 from multiprocessing import Pool
 
-FONTS = ["nanumgodigL", "", "NanumGothic", "JosunIlboMJ", "BareunBatangL",
+FONTS = ["nanumgodigL", "nanumgodigB", "NanumGothic", "JosunIlboMJ", "BareunBatangL",
 "BareunBatangB", "10X10"]
 FILE_PATH = "../tensorflow-hangul-recognition/image-data/hangul-images/"
 
-THREADS = 4
+THREADS = 1
 
 def aux(entry):
     """aux function for pooling"""
@@ -19,7 +19,6 @@ def aux(entry):
 
 
 if __name__ == '__main__':
-
     images = []
     for font in FONTS:
         # name[-6] is the position of the hangeul character
