@@ -11,12 +11,13 @@ min_loss = 99999999 # some magic big number
 min_name = ''
 # cv2.destroyAllWindows()
 
-with load('./dataset.npy') as data:
-    for (feature, fullname, font, c) in data:
-        loss = score.loss(feature, img_ft)
-        if loss < min_loss:
-            min_loss = loss
-            min_name = fullname
+data = np.load('./dataset.npy')
+
+for (feature, fullname, font, c) in data:
+    loss = score.loss(feature, img_ft)
+    if loss < min_loss:
+        min_loss = loss
+        min_name = fullname
 
 cv2.imshow("data", cv2.imread(min_name))
 cv2.imshow("test", img)
