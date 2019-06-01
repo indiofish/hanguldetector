@@ -4,10 +4,11 @@ import cv2
 import glob
 import knn
 from multiprocessing import Pool
+import timeit
 
 
 FONTS = [""]
-TESTFONT = "NanumGothic"
+TESTFONT = "BareunDotum1"
 FILE_PATH = "../tensorflow-hangul-recognition/image-data/hangul-images/"
 THREADS = 4
 
@@ -30,6 +31,7 @@ if __name__ == '__main__':
 
     data = p.map(aux, images)
 
+    start = timeit.default_timer()
     error = 0
     for name in glob.glob(FILE_PATH+"*{}_*.jpeg".format(TESTFONT)):
         testimg = cv2.imread(name)
@@ -44,3 +46,4 @@ if __name__ == '__main__':
             print('gt:', char, 'infer:', response)
 
     print(((256-error)/256)*100)
+    print("took: ", timeit.default_timer() - start)
