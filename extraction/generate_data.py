@@ -4,8 +4,9 @@ import cv2
 import glob
 from multiprocessing import Pool
 
-FONTS = ["nanumgodigL", "nanumgodigB", "NanumGothic", "JosunIlboMJ", "BareunBatangL",
-"BareunBatangB", "10X10", '']
+FONTS = [""]
+# TESTFONT = "SeoulHangangL"
+TESTFONT = "NanumPen"
 FILE_PATH = "../tensorflow-hangul-recognition/image-data/hangul-images/"
 
 THREADS = 4
@@ -22,7 +23,9 @@ if __name__ == '__main__':
     images = []
     for font in FONTS:
         # name[-6] is the position of the hangeul character
-        images += [(cv2.imread(name), name, font, name[-6]) for name in glob.glob(FILE_PATH + "*{}_*.jpeg".format(font))]
+        for name in glob.glob(FILE_PATH+"*{}_*.jpeg".format(font)):
+            if TESTFONT not in name:
+                images += [(cv2.imread(name), name, font, name[-6])]
 
     p = Pool(THREADS)
 
