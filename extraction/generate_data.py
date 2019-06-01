@@ -5,10 +5,10 @@ import glob
 from multiprocessing import Pool
 
 FONTS = ["nanumgodigL", "nanumgodigB", "NanumGothic", "JosunIlboMJ", "BareunBatangL",
-"BareunBatangB", "10X10"]
+"BareunBatangB", "10X10", '']
 FILE_PATH = "../tensorflow-hangul-recognition/image-data/hangul-images/"
 
-THREADS = 1
+THREADS = 4
 
 def aux(entry):
     """aux function for pooling"""

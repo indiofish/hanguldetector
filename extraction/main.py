@@ -3,7 +3,7 @@ import numpy as np
 import features
 import score
 
-testimgpath = "./testset/testga.png"
+testimgpath = "./testset/testda.png"
 img = cv2.imread(testimgpath)
 img_ft = features.get_profile(img)
 
@@ -18,6 +18,9 @@ for (feature, fullname, font, c) in data:
     if loss < min_loss:
         min_loss = loss
         min_name = fullname
+    print(c, loss)
+
+print(min_name, min_loss)
 
 cv2.imshow("data", cv2.imread(min_name))
 cv2.imshow("test", img)
