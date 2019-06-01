@@ -83,4 +83,10 @@ def get_profile(img):
                 tmp += cnt
             features.append(tmp/h)
 
-    return np.array(features)
+
+    ft = np.array(features)
+    n = np.linalg.norm(ft)
+    if n != 0:
+        ft = np.true_divide(ft, n)
+
+    return ft
