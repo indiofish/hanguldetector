@@ -5,5 +5,5 @@ def loss(ft1, ft2):
     if len(ft1) == len(ft2):
         return np.linalg.norm(ft1 - ft2)
     else:
+        # penalize heavily
         return 100
-
