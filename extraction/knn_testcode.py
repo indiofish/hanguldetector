@@ -8,7 +8,7 @@ import timeit
 
 
 FONTS = [""]
-TESTFONT = "BareunDotum1"
+TESTFONT = "10X10"
 FILE_PATH = "../tensorflow-hangul-recognition/image-data/hangul-images/"
 THREADS = 4
 
@@ -27,23 +27,29 @@ if __name__ == '__main__':
             if TESTFONT not in name:
                 images += [(cv2.imread(name), name, font, name[-6])]
 
+
     p = Pool(THREADS)
 
     data = p.map(aux, images)
+    # data = np.load('dataset.npy')
+
 
     start = timeit.default_timer()
     error = 0
+    cnt = 0
     for name in glob.glob(FILE_PATH+"*{}_*.jpeg".format(TESTFONT)):
+        cnt += 1
         testimg = cv2.imread(name)
         img_ft = get_profile(testimg)
         char = name[-6]
 
         neighbors = knn.get_neighbors(data, img_ft, 10)
         response = knn.response(neighbors)
+        label, confidence = response
         # print(votes)
-        if char != response:
+        if char != label:
             error += 1
-            print('gt:', char, 'infer:', response)
+        print('gt:', char, 'infer:', label, 'confidence:', confidence)
 
     print(((256-error)/256)*100)
     print("took: ", timeit.default_timer() - start)

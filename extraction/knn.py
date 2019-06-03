@@ -22,10 +22,15 @@ def get_neighbors(trainset, testft, k):
 def response(neighbors):
     votes = {}
     for (dist, label) in neighbors:
+        if dist == 0:
+            # some magic small number
+            dist = 0.00000000001
         try:
             votes[label] += 1 / dist
-        except:
+        except KeyError:
             votes[label] = 1 / dist
-    label = max(votes.items(), key=lambda x: x[1])[0]
 
-    return label
+    label = max(votes.items(), key=lambda x: x[1])[0]
+    confidence = votes[label] / (sum(votes.values())) * 100
+
+    return (label, confidence)
