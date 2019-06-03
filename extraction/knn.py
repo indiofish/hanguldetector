@@ -1,18 +1,22 @@
 from multiprocessing import Pool
 from functools import partial
-import score
+import numpy as np
+
+def dist(ft1, ft2):
+    """return the euclidian distance between the two feature vectors"""
+    if len(ft1) == len(ft2):
+        return np.linalg.norm(ft1 - ft2)
+    else:
+        # penalize heavily
+        return 100
 
 def aux(data, testft):
     feature, name, font, c = data
-    return (score.loss(feature, testft), c)
+    return (dist(feature, testft), c)
 
-def get_neighbors(trainset, testft, k, THREADS=1):
-    if THREADS > 1:
-        p = Pool(THREADS)
-        distances = p.map(partial(aux, testft=testft), trainset)
-        distances = sorted(distances)
-    else:
-        distances = sorted([aux(d, testft) for d in trainset])
+def get_neighbors(trainset, testft, k):
+    distances = [aux(d, testft) for d in trainset]
+    distances = sorted(distances)
 
     return distances[:k]
 
