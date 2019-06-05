@@ -8,7 +8,11 @@ def split(a, n):
     return (a[i*k + min(i,m):(i+1) * k+min(i+1, m)] for i in range(n))
 
 def get_profile(img):
-    imgray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    try:
+        imgray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    except:
+        # image has been already binarized
+        imgray = img
 
     # swap 255 and 0 so that contour can work correctly
     # contour sees an white image in a black background
