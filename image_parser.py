@@ -6,7 +6,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 if __name__ == "__main__":
-    path = os.path.dirname(os.path.realpath(__file__)) + "/Test2.png"
+    path = os.path.dirname(os.path.realpath(__file__)) + "/Test3.png"
     #path = '/home/wonho/ImageParsing/resource/orc_ori_image/etc1.JPG'
     image = Image.open(path).convert('L')
     with PyTessBaseAPI(lang='eng+kor') as api:
@@ -72,7 +72,13 @@ if __name__ == "__main__":
                 ret, thresh = cv2.threshold(img, 127, 255, cv2.THRESH_BINARY_INV)
 
                 # ignore inner box for chars like 'o'
-                _, contours, hierarchy = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+                tmp =  cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+
+                # based on opencv version, number of parameters differ
+                try:
+                    _, contours, hierarchy = tmp
+                except:
+                    contours, hierarchy = tmp
                 print('contours' + str(len(contours)))
 
 
@@ -101,11 +107,3 @@ if __name__ == "__main__":
                 Image.open(filename).crop((left_c, top_c, right_c, bottom_c)).resize((64,64)).save(filename)
 
                 count = count + 1
-
-
-
-
-
-    #size = (64,64)
-    #parsed_image.thumbnail(size)
-
