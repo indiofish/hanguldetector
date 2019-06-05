@@ -1,23 +1,19 @@
-from functools import partial
 import numpy as np
+import heapq
 
 def dist(ft1, ft2):
     """return the euclidian distance between the two feature vectors"""
-    if len(ft1) == len(ft2):
+    if ft1.size == ft2.size:
         return np.linalg.norm(ft1 - ft2)
     else:
         # penalize heavily
         return 100
 
-def aux(data, testft):
-    feature, name, font, c = data
-    return (dist(feature, testft), c)
-
 def get_neighbors(trainset, testft, k):
-    distances = [aux(d, testft) for d in trainset]
-    distances = sorted(distances)
-
-    return distances[:k]
+    # feature, name, font, c = d in trainset
+    distances = ((dist(d[0], testft), d[3]) for d in trainset)
+    # distances = sorted(distances)
+    return heapq.nsmallest(k, distances)
 
 def response(neighbors):
     votes = {}
