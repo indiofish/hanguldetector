@@ -6,7 +6,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 if __name__ == "__main__":
-    path = os.path.dirname(os.path.realpath(__file__)) + "/Test2.png"
+    path = os.path.dirname(os.path.realpath(__file__)) + "/Test.png"
     #path = '/home/wonho/ImageParsing/resource/orc_ori_image/etc1.JPG'
     image = Image.open(path).convert('L')
     with PyTessBaseAPI(lang='eng+kor') as api:
@@ -47,7 +47,7 @@ if __name__ == "__main__":
             for j in range(len(starts)):
                 if j >= len(starts):
                     break
-                if ends[j] - starts[j] < box['h'] * 0.5:
+                if ends[j] - starts[j] < box['h'] * 0.4:
                     if j > 0:
                         del starts[j]
                         del ends[j-1]
