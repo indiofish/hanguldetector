@@ -1,9 +1,0 @@
-Figure 2. A Cell has the Magnitude and Direction of Gradient of each 64 pixels
-Figure 3-(1) & (2). Example of calculating Histogram of cell
-Figure 4. Block shift. Overlapping over the image
-Figure 5. Block normalization
-Figure 6. A HOG Feature Vector of one text image ‘가’
-Figure 7. Finding different HOG Feature Vector among same letter ‘가’
-Figure 8. Example of Experiment
-- Result Table -
-Figure 9. Compare between Actual & Predict
